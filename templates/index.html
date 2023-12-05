@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Location Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    
+    <br>
+    <br>
+    <br>
+    <div class="container">
+        <div class="header">
+            <b><h1>Location Prediction</h1></b>
+        </div>
+
+        <div class="content">
+            <div class="form">
+                <form id="locationForm" action="/predict_location" method="post">
+                    <b><label for="rssi">Enter RSSI Value:</label></b>
+                    <input type="text" id="rssi" name="rssi_values" required>
+                    <button type="submit">Predict Location</button>
+                </form>
+
+                {% if error_message %}
+                    <p class="error">{{ error_message }}</p>
+                {% endif %}
+
+                {% if predicted_location %}
+                    <p class="result">Predicted Location: {{ predicted_location }}</p>
+                {% endif %}
+            </div>
+
+            <div id="map-container" class="map-container">
+                <img id="map" src="{{ url_for('static', filename='map.png') }}" alt="Map">
+            </div>
+        </div>
+
+        <!-- ... (previous HTML code) ... -->
+
+<script>
+    // Coordinates for 13 locations
+    const locationCoordinates = {
+        'location1': { x: 44, y: 60 },
+        'location2': { x: 160, y: 60 },
+        'location3': { x: 90, y: 180 },
+        'location4': { x: 34, y:300  },
+        'location5': { x: 23, y: 394 },
+        'location6': { x: 34, y: 385 },
+        'location7': { x: 155, y: 511 },
+        'location8': { x: 234, y: 376 },
+        'location9': { x: 540, y: 480 },
+        'location10': { x: 300, y: 270 },
+        'location11': { x: 423, y: 132 },
+        'location12': { x: 530, y: 112 },
+        'location13': { x: 510, y: 230 },
+    };
+
+    // Example usage
+    const predictedLocation = "{{ predicted_location }}"; // Use Flask template syntax to insert the predicted location
+
+    // Create and append the cursor element for the predicted location
+    const mapContainer = document.getElementById('map-container');
+    const cursor = document.createElement('div');
+    cursor.classList.add('cursor');
+    cursor.style.width = '20px';
+    cursor.style.height = '20px';
+    cursor.style.backgroundColor = 'red';
+    cursor.style.position = 'absolute';
+
+    // Check if the predicted location exists in the coordinates
+    if (predictedLocation in locationCoordinates) {
+        cursor.style.left = locationCoordinates[predictedLocation].x + 'px';
+        cursor.style.top = locationCoordinates[predictedLocation].y + 'px';
+        mapContainer.appendChild(cursor);
+    } else {
+        console.error('Predicted location not found in coordinates:', predictedLocation);
+    }
+</script>
+
+<!-- ... (remaining HTML code) ... -->
+
+    </div>
+</body>
+
+<!-- ... (remaining HTML code) ... -->
+
+
+</html>
