@@ -5,11 +5,11 @@ This Flask application serves as a simple location prediction system based on Re
 ## How To Run This Code
 1. Clone this repository
 ```bash
-git clone  
+git clone https://github.com/klrab3490/RSSI-location-prediction.git Location-Prediction 
 ```
 2. Open the Folder
 ```bash
-cd
+cd Location-Prediction
 ```
 3. Install necessary modules
 ```bash
